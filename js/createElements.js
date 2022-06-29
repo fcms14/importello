@@ -1,45 +1,22 @@
+import { div } from "./div.js";
 const ul = document.querySelector('ul')
 
-export function createElement(fileName, size = 0, loading = false, file = ""){
+export function createElements({fileName, size = 0, file = ""}){
     const uniq = 'id' + btoa(fileName).replace(/=/g, '').substring(0, 7) + Math.floor(Math.random() * 15379) + 1;
     const li = document.createElement('li')
     li.dataset.fileName = fileName;
     li.setAttribute("id", uniq);
     li.className = "file-list ";
     
-    li.innerHTML = `    
-        <div class="thumbnail">
-            <ion-icon name="document-outline"></ion-icon>
-            <span class="completed">
-                <ion-icon name="checkmark-done-outline"></ion-icon>
-            </span>
-        </div>
-        <div class="properties">
-            <span class="title"><strong></strong></span>
-            <span class="size"></span>
-            <span class="progress">
-                <span class="buffer"></span>
-                <span class="percentage">0%</span>
-            </span>
-        </div>
-        <button class="remove" id="remove-${uniq}">
-            <ion-icon name="close-outline"></ion-icon>
-        </button>
-        <button class="import" id="import-${uniq}">
-            <ion-icon name="swap-horizontal-outline"></ion-icon>
-        </button>
-        <button class="loading">
-            <ion-icon name="reload-outline"></ion-icon>
-        </button>    
-    `;
+    li.innerHTML = div(uniq);
 
-    if (loading) {
+    if (file) {
         ul.append(li);
         addStyles(uniq, size, fileName, true)
 
-        var data = new FormData;
+        const data = new FormData;
         data.append('file', file);
-        var request = new XMLHttpRequest();
+        const request = new XMLHttpRequest();
         request.open('POST', './php/Upload/index.php');
 
         request.upload.addEventListener('progress', function (e) {
@@ -67,9 +44,9 @@ export function createElement(fileName, size = 0, loading = false, file = ""){
 
 function addButtons(li, uniq, file){
     li.querySelector('#remove-' + uniq).onclick = () => {
-        var data = new FormData();
+        const data = new FormData();
         data.append('deleteFile', file);
-        var requestDelete = new XMLHttpRequest();
+        const requestDelete = new XMLHttpRequest();
         requestDelete.open('POST', './php/Upload/index.php', true);
         requestDelete.onload = function () {
             alert(this.responseText);
@@ -83,20 +60,20 @@ function addButtons(li, uniq, file){
         li.querySelector('.remove').style.display = li.querySelector('.import').style.display = 'none';
         li.querySelector('.loading').style.display = 'flex';
 
-        var data = new FormData();
+        const data = new FormData();
         data.append('importFile', file);
         data.append('idBulkInsert', idBulkInsert)
-        var requestImport = new XMLHttpRequest();
+        const requestImport = new XMLHttpRequest();
         requestImport.open('POST', './php/BulkInsert/import.php', true);
 
         requestImport.addEventListener('load', function (e) {
             li.querySelector('.loading').style.display = 'none';
+            alert("Erros: " + "\n" + JSON.parse(requestImport.response));
 
-
-            var result = new FormData();
+            const result = new FormData();
             result.append('importFile', file);
             result.append('idBulkInsert', idBulkInsert)
-            var requestResult = new XMLHttpRequest();
+            const requestResult = new XMLHttpRequest();
             requestResult.open('POST', './php/BulkInsert/result.php', true);
             
             requestResult.addEventListener('load', function (e) {
@@ -112,15 +89,15 @@ function addButtons(li, uniq, file){
 }    
 
 function addStyles(uniq, size, file, loading = false){
-    const li_el       = document.querySelector('#' + uniq);
-    const name_el     = li_el.querySelector('.title strong');
-    const size_el     = li_el.querySelector('.size');
+    const li       = document.querySelector('#' + uniq);
+    const name_el     = li.querySelector('.title strong');
+    const size_el     = li.querySelector('.size');
     size_el.innerHTML = size == 0 ? "&nbsp;" : bytesToSize(size);
     name_el.innerHTML = file;
-    li_el.querySelector('.buffer').style.width = 100 + '%';
-    li_el.querySelector('.percentage').innerHTML = 100 + '%';
-    li_el.querySelector('.percentage').style.left = 100 + '%';
-    li_el.querySelector('.completed').style.display = li_el.querySelector('.remove').style.display = li_el.querySelector('.import').style.display = loading ? 'none': 'flex';
+    li.querySelector('.buffer').style.width = 100 + '%';
+    li.querySelector('.percentage').innerHTML = 100 + '%';
+    li.querySelector('.percentage').style.left = 100 + '%';
+    li.querySelector('.completed').style.display = li.querySelector('.remove').style.display = li.querySelector('.import').style.display = loading ? 'none': 'flex';
 }
 
 function bytesToSize(bytes) {

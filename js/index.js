@@ -1,5 +1,5 @@
 import { pendingFiles } from "./pendingFiles.js";
-import { createElement } from "./createElement.js";
+import { createElements } from "./createElements.js";
 const allowed_mime_types = ['text/csv'];
 
 pendingFiles(allowed_mime_types);
@@ -26,6 +26,6 @@ document.querySelector('.file-input').addEventListener('change', function () {
             return;
         }
         
-        createElement(file.name, file.size, true, file);
+        createElements({fileName: file.name, size: file.size, loading: true, file});
     }
 });
