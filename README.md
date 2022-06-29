@@ -39,5 +39,5 @@ ORDER BY timeSpent;
 ```
 
 
-# Create an File to Import
+# Create File to Import
 php/Util/writeCSV.php
