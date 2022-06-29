@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    --primary: #e63b4f;
+    --hover-primary: #ca3143;
+    --secondary: #323233;
+    --light: #f8f9fa;
+    --confirmed: #6ccf5b;
+}
+
+::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--light);
+    background-color: var(--secondary);
+}
+
+.site h1 {
+    text-align: center;
+    padding: 5% 0 0 0;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: clamp(320px, 100%, 550px);
+    margin: 2% auto;
+    padding: 20px;
+}
+.file-upload {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--primary);
+    box-shadow: var(--hover-primary) 0 0 5px 5px;
+}
+
+.file-upload input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.file-upload .icon {
+    position: relative;
+    margin-bottom: 5em;
+}
+
+.file-upload .icon ion-icon {
+    position: relative;
+    font-size: 4em;
+    color: var(--light);
+    z-index: 1;
+}
+
+.file-upload .icon::before, .file-upload .icon::after {
+    content: '';
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    border: 3px solid var(--light);
+    background-color: var(--primary);
+    transform: scale(1.5);
+    z-index: 1;
+}
+
+.file-upload .icon::after {
+    border: 0;
+    transform: scale(2.5);
+    z-index: 0;
+    background-color: var(--hover-primary);
+}
+
+.file-upload h3 {
+    font-weight: 400;
+    font-size: 1.5em;
+    color: var(--light);    
+}
+
+.file-upload button {
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    color: var(--light);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--hover-primary);
+    box-shadow: var(--light) 0 0 5px 3px;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+}
+
+.file-upload button ion-icon {
+    font-size: 2em;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.file-upload:hover button {
+    background-color: var(--hover-primary);
+    transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+    box-shadow: var(--light) 0 5px 5px 3px;
+}
+
+.list-upload {
+    padding: 0 2em;
+}
+
+.list-upload ul li {
+    position: relative;
+    display: flex;
+    margin: 3em 0;
+    padding-right: 2em;
+}
+
+.list-upload .thumbnail {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 7px;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.list-upload .thumbnail > ion-icon {
+    font-size: 3em;
+    color: var(--light);
+    display: none;
+}
+
+
+.file-list .thumbnail > [name="document-outline"]{
+    display: block;    
+}
+
+.list-upload .thumbnail .completed {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--confirmed);
+    color: var(--light);
+    align-items: center;
+    justify-content: center;
+}
+
+.list-upload .properties {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    gap: 5px;
+}
+
+.list-upload .properties .file-list:where(.file,.application,.text) {
+    word-break: break-word;
+}
+
+.list-upload .properties .size {
+    color: var(--light);
+    font-size: 12px;
+}
+
+.list-upload .properties :where(.progress,.buffer){
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--light);
+}
+
+.list-upload .properties .buffer {
+    width: 50%;
+    background: var(--confirmed);
+    box-shadow: var(--confirmed) 0 0 5px 1px;
+}
+
+.list-upload .properties .percentage {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 10px;
+}
+
+.list-upload .remove, .list-upload .import, .list-upload .loading  {
+    position: absolute;
+    right: 40px;
+    top: 10%;
+    border: 0;
+    outline: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--light);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.list-upload .import, .list-upload .loading {
+    transform: scale(1.5);   
+    background-color: var(--confirmed);
+    color: var(--light);
+    right: 0;
+}
+
+.list-upload .remove:hover {
+    background-color: var(--hover-primary);
+}
+
+.list-upload :where(.completed, .remove, .import, .loading){
+    display: none;
+}
+
+.list-upload .loading{
+    animation: spin 3s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: scale(1.5) rotate(0deg);
+    }
+    50%{
+        transform: scale(1.8) rotate(180deg);
+    }
+    100% {
+        transform: scale(1.5) rotate(360deg);
+    }
+}
