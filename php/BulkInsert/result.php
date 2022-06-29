@@ -5,7 +5,7 @@ $path           = '../Upload/uploads/';
 $importFile     =   $path . $_POST['importFile'];
 $idBulkInsert   =   $_POST['idBulkInsert'];
 
-$result = " SELECT 
+$q = " SELECT 
                 TIMEDIFF(max(dateCreated), min(dateCreated)) AS timeSpent,
                 count(*) AS rowsInserted
             FROM shipping 
@@ -13,12 +13,9 @@ $result = " SELECT
             LIMIT 1;
         ";
 
-$q = mysqli_query($conn, $result);
-while($r = mysqli_fetch_assoc($q)){
-    $result = $r;
-}
-
+$q = mysqli_query($conn, $q);
+$r = mysqli_fetch_assoc($q);
 mysqli_close($conn);
 unlink($importFile);
 
-echo $result['rowsInserted'] . " linhas inseridas em " . $result['timeSpent'] ;
+echo $r['rowsInserted'] . " linhas inseridas em " . $r['timeSpent'] ;

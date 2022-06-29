@@ -50,16 +50,14 @@ while (($data = fgetcsv($csvFile, 1000, ",")) !== false) {
     
 }
 
-if($bulkInsert == ""){
-    mysqli_close($conn);
-    return;
+if($bulkInsert != ""){
+    $bulkInsert  =  $insertQuery . $bulkInsert;
+    $bulkInsert  =  substr($bulkInsert, 0, strlen($bulkInsert) - 2);
+    if (!mysqli_query($conn, $bulkInsert)) {
+        echo "Error: " . mysqli_error($conn);
+        return;
+    }
 }
 
-$bulkInsert  =  $insertQuery . $bulkInsert;
-$bulkInsert  =  substr($bulkInsert, 0, strlen($bulkInsert) - 2);
-if (!mysqli_query($conn, $bulkInsert)) {
-    echo "Error: " . mysqli_error($conn);
-    return;
-}
 mysqli_close($conn);
 print_r(json_encode($errors));

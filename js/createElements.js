@@ -27,11 +27,10 @@ export function createElements({fileName, size = 0, file = ""}){
             li.querySelector('.percentage').style.left = percent + '%';
         });
 
-        request.addEventListener('load', function (e) {
-            alert(request.response);
-            
+        request.addEventListener('load', function (e) {            
             li.querySelector('.completed').style.display = li.querySelector('.remove').style.display = li.querySelector('.import').style.display = 'flex';
             addButtons(li, uniq, fileName);
+            alert(request.response);
         });
         request.send(data);
         return;
